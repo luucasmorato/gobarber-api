@@ -1,4 +1,4 @@
-import Sequelize, { Model } from "sequelize";
+import Sequelize, { Model, ForeignKeyConstraintError } from "sequelize";
 import bcrypt from "bcryptjs";
 
 class User extends Model {
@@ -23,6 +23,10 @@ class User extends Model {
     });
 
     return this;
+  }
+
+  static associate(models) {
+    this.belongsTo(models.File, { ForeignKey: "avatar_id" });
   }
 
   checkPassword(password) {
